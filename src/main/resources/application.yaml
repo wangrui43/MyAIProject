@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: MyChatAI
+  data:
+    redis:
+      host: localhost
+      port: 6379
+  ai:
+    ollama:
+      # ollama本地服务地址， 这就是默认值
+      base-url: http://localhost:11434
+      chat:
+        #本地启动的模型名称
+        model: deepseek-r1:7b
+        options:
+          temperature: 0.8
+logging:
+  level:
+    #AI对话的日志级别
+    org.springframework.ai: debug
+    #当前项目的日志级别
+    com.study.springAI: debug
