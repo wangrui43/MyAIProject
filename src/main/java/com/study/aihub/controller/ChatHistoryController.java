@@ -1,8 +1,8 @@
-package com.study.springAI.controller;
+package com.study.aihub.controller;
 
 
-import com.study.springAI.entity.vo.MessageVO;
-import com.study.springAI.repository.ChatHistoryRepository;
+import com.study.aihub.entity.vo.MessageVO;
+import com.study.aihub.repository.ChatHistoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.messages.Message;

@@ -1,6 +1,6 @@
-package com.study.springAI.repository.impl;
+package com.study.aihub.repository.impl;
 
-import com.study.springAI.repository.ChatHistoryRepository;
+import com.study.aihub.repository.ChatHistoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

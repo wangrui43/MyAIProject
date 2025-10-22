@@ -1,4 +1,4 @@
-package com.study.springAI;
+package com.study.aihub;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

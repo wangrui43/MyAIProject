@@ -1,13 +1,15 @@
-package com.study.springAI.config;
+package com.study.aihub.config;
 
 
-import com.study.springAI.repository.impl.InRedisChatMemory;
+import com.study.aihub.constant.SystemConstants;
+import com.study.aihub.repository.impl.InRedisChatMemory;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.memory.InMemoryChatMemory;
 import org.springframework.ai.ollama.OllamaChatModel;
+import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -41,11 +43,30 @@ public class CommonConfiguration {
     public ChatClient chatClient(OllamaChatModel ollamaChatModel, ChatMemory chatMemory) {
         return ChatClient
                 .builder(ollamaChatModel)
-                .defaultSystem("您是一家名为“黑马程序员”的职业教育公司的客户聊天助手，你的名字叫小黑。请以友好、乐于助人和愉快的方式解答学生的各种问题。")
+                .defaultSystem(SystemConstants.CHAT_SYSTEM_PROMPT)
                 .defaultAdvisors(
                         new SimpleLoggerAdvisor(),
                         new MessageChatMemoryAdvisor(chatMemory)
                 )
+                .build();
+    }
+
+    /**
+     *  游戏对话客户端
+     * @param chatModel
+     * @param chatMemory
+     * @return {@link ChatClient }
+     * @author wangrui
+     * @date 2025/10/22
+     */
+    @Bean
+    public ChatClient gameChatClient(OpenAiChatModel chatModel, ChatMemory chatMemory){
+        return ChatClient
+                .builder(chatModel)
+                .defaultSystem(SystemConstants.GAME_SYSTEM_PROMPT)
+                .defaultAdvisors(
+                        new SimpleLoggerAdvisor(),
+                        new MessageChatMemoryAdvisor(chatMemory))
                 .build();
     }
 }

@@ -1,4 +1,4 @@
-package com.study.springAI;
+package com.study.aihub;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

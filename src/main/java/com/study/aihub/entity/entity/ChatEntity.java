@@ -1,4 +1,4 @@
-package com.study.springAI.entity.entity;
+package com.study.aihub.entity.entity;
 
 import lombok.Data;
 

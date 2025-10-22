@@ -1,4 +1,4 @@
-package com.study.springAI.entity.vo;
+package com.study.aihub.entity.vo;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

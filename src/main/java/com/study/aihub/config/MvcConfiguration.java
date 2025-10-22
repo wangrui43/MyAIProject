@@ -1,4 +1,4 @@
-package com.study.springAI.config;
+package com.study.aihub.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

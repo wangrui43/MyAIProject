@@ -6,6 +6,13 @@ spring:
       host: localhost
       port: 6379
   ai:
+    openai:
+      base-url: https://dashscope.aliyuncs.com/compatible-mode/
+      api-key: ${OPENAI_API_KEY}
+      chat:
+        options:
+          # 可选择的模型列表 https://help.aliyun.com/zh/model-
+          model: qwen-max-latest
     ollama:
       # ollama本地服务地址， 这就是默认值
       base-url: http://localhost:11434
@@ -19,4 +26,4 @@ logging:
     #AI对话的日志级别
     org.springframework.ai: debug
     #当前项目的日志级别
-    com.study.springAI: debug
+    com.study.aihub: debug

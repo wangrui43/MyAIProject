@@ -1,7 +1,7 @@
-package com.study.springAI.repository.impl;
+package com.study.aihub.repository.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.study.springAI.entity.entity.ChatEntity;
+import com.study.aihub.entity.entity.ChatEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.messages.*;

@@ -1,7 +1,7 @@
-package com.study.springAI.controller;
+package com.study.aihub.controller;
 
-import com.study.springAI.enums.ChatTypeEnums;
-import com.study.springAI.repository.ChatHistoryRepository;
+import com.study.aihub.enums.ChatTypeEnums;
+import com.study.aihub.repository.ChatHistoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.AbstractChatMemoryAdvisor;

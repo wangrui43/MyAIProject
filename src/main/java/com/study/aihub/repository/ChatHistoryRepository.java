@@ -1,4 +1,4 @@
-package com.study.springAI.repository;
+package com.study.aihub.repository;
 
 import java.util.List;
 

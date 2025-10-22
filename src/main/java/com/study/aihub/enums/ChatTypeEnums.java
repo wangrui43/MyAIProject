@@ -1,4 +1,4 @@
-package com.study.springAI.enums;
+package com.study.aihub.enums;
 
 
 import lombok.Data;
