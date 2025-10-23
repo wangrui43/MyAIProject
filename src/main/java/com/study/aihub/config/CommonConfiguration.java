@@ -12,12 +12,10 @@ import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
-import org.springframework.ai.chat.memory.InMemoryChatMemory;
 import org.springframework.ai.chat.observation.ChatModelObservationConvention;
 import org.springframework.ai.model.SimpleApiKey;
 import org.springframework.ai.model.tool.ToolCallingManager;
 import org.springframework.ai.ollama.OllamaChatModel;
-import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.ai.openai.api.OpenAiApi;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.context.annotation.Bean;
@@ -89,8 +87,7 @@ public class CommonConfiguration {
                                         .defaultOptions(chatProperties.getOptions())
                                         .toolCallingManager(toolCallingManager)
                                         .retryTemplate(retryTemplate)
-                                        .observationRegistry((ObservationRegistry)observationRegistry
-                                        .getIfUnique(() -> ObservationRegistry.NOOP))
+                                        .observationRegistry(observationRegistry.getIfUnique(() -> ObservationRegistry.NOOP))
                                         .build();
         Objects.requireNonNull(chatModel);
         observationConvention.ifAvailable(chatModel::setObservationConvention);
@@ -118,8 +115,8 @@ public class CommonConfiguration {
 
     /**
      *  游戏对话客户端
-     * @param chatModel
-     * @param chatMemory
+     * @param chatModel 模型
+     * @param chatMemory 聊天记忆
      * @return {@link ChatClient }
      * @author wangrui
      * @date 2025/10/22
