@@ -6,8 +6,6 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -33,6 +31,9 @@ public class ChatHistoryByRedis implements ChatHistoryRepository {
     public List<String> getChatIds(String chatType) {
         String key = REDIS_CHAT_IDS_KEY + chatType;
         Set<String> members = redisTemplate.opsForSet().members(key);
-        return members.stream().toList();
+        if (members != null) {
+            return members.stream().toList();
+        }
+        return List.of();
     }
 }
