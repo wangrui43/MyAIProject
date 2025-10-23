@@ -3,6 +3,7 @@ package com.study.aihub.config;
 
 import com.study.aihub.constant.SystemConstants;
 import com.study.aihub.repository.impl.InRedisChatMemory;
+import com.study.aihub.tools.CourseTools;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
@@ -67,6 +68,27 @@ public class CommonConfiguration {
                 .defaultAdvisors(
                         new SimpleLoggerAdvisor(),
                         new MessageChatMemoryAdvisor(chatMemory))
+                .build();
+    }
+
+    /**
+     * 客服对话客户端
+     * @param chatModel  客户端模型
+     * @param chatMemory 聊天记忆存储
+     * @param tool       Function工具类
+     * @return {@link ChatClient }
+     * @author wangrui
+     * @date 2025/10/22
+     */
+    @Bean
+    public ChatClient serviceChatClient(OpenAiChatModel chatModel, ChatMemory chatMemory, CourseTools tool){
+        return ChatClient
+                .builder(chatModel)
+                .defaultSystem(SystemConstants.CUSTOMER_SERVICE_SYSTEM)
+                .defaultAdvisors(
+                        new SimpleLoggerAdvisor(),
+                        new MessageChatMemoryAdvisor(chatMemory))
+                .defaultTools(tool)
                 .build();
     }
 }
