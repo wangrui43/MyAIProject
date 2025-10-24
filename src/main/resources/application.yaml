@@ -1,15 +1,23 @@
 spring:
   application:
     name: MyChatAI
+  servlet:
+    multipart:
+      # 文件上传大小限制
+      max-file-size: 104857600
+      max-request-size: 104857600
   data:
     redis:
       host: localhost
-      port: 6379
+      port: 6378
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/CustomerService?serverTimezone=Asia/Shanghai&useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&tinyInt1isBit=false&allowPublicKeyRetrieval=true&allowMultiQueries=true&useServerPrepStmts=false
     username: root
     password: ${MYSQL_PASSWORD}
+#  cassandra:
+#    contact-points: localhost
+#    local-datacenter: datacenter1
   ai:
     openai:
       base-url: https://dashscope.aliyuncs.com/compatible-mode/
@@ -18,6 +26,20 @@ spring:
         options:
           # 可选择的模型列表 https://help.aliyun.com/zh/model-
           model: qwen-max-latest
+      # 向量模型
+      embedding:
+        options:
+          model: text-embedding-v3
+          dimensions: 1024
+    vectorstore:
+#       cassandra:
+#         initialize-schema: true
+#         keyspace: spring_ai_index
+#         table: spring_ai_vector
+       redis:
+        index: spring_ai_index # 向量库索引名
+        initialize-schema: true # 是否初始化向量库索引结构
+        prefix: "doc:" # 向量库key前缀
     ollama:
       # ollama本地服务地址， 这就是默认值
       base-url: http://localhost:11434

@@ -1,6 +1,7 @@
 package com.study.aihub.tools;
 
 
+import ch.qos.logback.core.util.StringUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.study.aihub.entity.entity.CourseQueryEntity;
 import com.study.aihub.entity.po.Course;
@@ -9,7 +10,6 @@ import com.study.aihub.entity.po.School;
 import com.study.aihub.service.ICourseReservationService;
 import com.study.aihub.service.ICourseService;
 import com.study.aihub.service.ISchoolService;
-import io.netty.util.internal.StringUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.ai.tool.annotation.ToolParam;

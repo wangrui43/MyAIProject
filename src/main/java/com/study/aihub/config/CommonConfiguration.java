@@ -10,13 +10,15 @@ import org.springframework.ai.autoconfigure.openai.OpenAiChatProperties;
 import org.springframework.ai.autoconfigure.openai.OpenAiConnectionProperties;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
+import org.springframework.ai.chat.client.advisor.QuestionAnswerAdvisor;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.observation.ChatModelObservationConvention;
 import org.springframework.ai.model.SimpleApiKey;
 import org.springframework.ai.model.tool.ToolCallingManager;
-import org.springframework.ai.ollama.OllamaChatModel;
 import org.springframework.ai.openai.api.OpenAiApi;
+import org.springframework.ai.vectorstore.SearchRequest;
+import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -51,6 +53,20 @@ public class CommonConfiguration {
         return new InRedisChatMemory(template);
     }
 
+//    @Bean
+//    public VectorStore vectorStore(OpenAiEmbeddingModel embeddingModel) {
+//        return SimpleVectorStore.builder(embeddingModel).build();
+//    }
+
+//    @Bean
+//    public CassandraVectorStore vectorStore(OpenAiEmbeddingModel embeddingModel, CqlSession cqlSession) {
+//        return CassandraVectorStore.builder(embeddingModel)
+//                .session(cqlSession)
+//                .addMetadataColumn(
+//                        new CassandraVectorStore.SchemaColumn("file_name", DataTypes.TEXT, CassandraVectorStore.SchemaColumnTags.INDEXED)
+//                )
+//                .build();
+//    }
     @Bean
     public AlibabaOpenAiChatModel alibabaOpenAiChatModel(OpenAiConnectionProperties commonProperties,
                                                          OpenAiChatProperties chatProperties,
@@ -102,7 +118,7 @@ public class CommonConfiguration {
      * @date 2025/10/20
      */
     @Bean
-    public ChatClient chatClient(OllamaChatModel ollamaChatModel, ChatMemory chatMemory) {
+    public ChatClient chatClient(AlibabaOpenAiChatModel ollamaChatModel, ChatMemory chatMemory) {
         return ChatClient
                 .builder(ollamaChatModel)
                 .defaultSystem(SystemConstants.CHAT_SYSTEM_PROMPT)
@@ -150,6 +166,23 @@ public class CommonConfiguration {
                         new SimpleLoggerAdvisor(),
                         new MessageChatMemoryAdvisor(chatMemory))
                 .defaultTools(tool)
+                .build();
+    }
+
+
+    @Bean
+    public ChatClient pdfChatClient(AlibabaOpenAiChatModel chatModel, ChatMemory chatMemory, VectorStore vectorStore){
+        return ChatClient.builder(chatModel)
+                .defaultSystem(SystemConstants.PDF_SYSTEM)
+                .defaultAdvisors(new SimpleLoggerAdvisor(),
+                        new MessageChatMemoryAdvisor(chatMemory),
+                        //这些配置是通用配置，在和大模型的每次对话时，还可以通过SearchRequest定义单次对话的特殊限制
+                        new QuestionAnswerAdvisor(vectorStore, SearchRequest.builder()
+                                //向量相似度阈值（大于该阈值的才作为参数传给大模型）
+                                .similarityThreshold(0.6)
+                                .topK(1)
+                                .build()))
+
                 .build();
     }
 }

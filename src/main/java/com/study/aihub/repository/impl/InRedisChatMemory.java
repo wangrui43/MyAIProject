@@ -26,9 +26,6 @@ public class InRedisChatMemory implements ChatMemory {
 
     private final RedisTemplate<String, Object> redisTemplate;
 
-//    public InRedisChatMemory(RedisTemplate<String, Object> redisTemplate) {
-//        this.redisTemplate = redisTemplate;
-//    }
 
     @Override
     public void add(String conversationId, List<Message> messages) {

@@ -99,4 +99,5 @@ public class SystemConstants {
         """;
 
 
+    public static final String PDF_SYSTEM = "请根据提供的上下文回答问题，不要自己猜测。";
 }
